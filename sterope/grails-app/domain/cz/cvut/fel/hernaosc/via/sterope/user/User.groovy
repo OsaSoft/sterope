@@ -13,6 +13,22 @@ class User implements Serializable {
 	boolean accountLocked
 	boolean passwordExpired
 
+	String firstname
+	String lastname
+	String email
+
+	static transients = ['springSecurityService']
+
+	static constraints = {
+		username blank: false, unique: true
+		password blank: false, password: true
+		firstname blank: true, nullable: false
+		lastname blank: true, nullable: false
+		email blank: false, nullable: false, email: true
+	}
+
+	static mapping = { password column: '`password`' }
+
 	User(String username, String password) {
 		this()
 		this.username = username
@@ -40,6 +56,8 @@ class User implements Serializable {
 
 	def beforeInsert() {
 		encodePassword()
+		if(!firstname) firstname = ""
+		if(!lastname) lastname = ""
 	}
 
 	def beforeUpdate() {
@@ -50,16 +68,5 @@ class User implements Serializable {
 
 	protected void encodePassword() {
 		password = springSecurityService?.passwordEncoder ? springSecurityService.encodePassword(password) : password
-	}
-
-	static transients = ['springSecurityService']
-
-	static constraints = {
-		username blank: false, unique: true
-		password blank: false
-	}
-
-	static mapping = {
-		password column: '`password`'
 	}
 }
