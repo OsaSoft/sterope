@@ -16,15 +16,18 @@ class User implements Serializable {
 	String firstname
 	String lastname
 	String email
+	
+	FacebookUser facebookUser
 
 	static transients = ['springSecurityService']
 
 	static constraints = {
 		username blank: false, unique: true
 		password blank: false, password: true
-		firstname blank: true, nullable: false
-		lastname blank: true, nullable: false
-		email blank: false, nullable: false, email: true
+		firstname blank: true, nullable: true
+		lastname blank: true, nullable: true
+		email blank: false, nullable: true, email: true
+		facebookUser nullable: true
 	}
 
 	static mapping = { password column: '`password`' }

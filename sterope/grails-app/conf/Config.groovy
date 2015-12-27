@@ -1,4 +1,7 @@
 // locations to search for config files that get merged into the main config;
+grails.config.locations = [ "classpath:local-config.properties",
+	"file:${userHome}/.grails/sterope-conf.properties"]
+
 // config files can be ConfigSlurper scripts, Java properties files, or classes
 // in the classpath in ConfigSlurper format
 
@@ -121,6 +124,7 @@ log4j.main = {
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'cz.cvut.fel.hernaosc.via.sterope.user.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'cz.cvut.fel.hernaosc.via.sterope.user.UserRole'
 grails.plugin.springsecurity.authority.className = 'cz.cvut.fel.hernaosc.via.sterope.user.Role'
+grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**':                ['permitAll'],
 	'/index':           ['permitAll'],
@@ -132,3 +136,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/favicon.ico':  ['permitAll']
 ]
 
+grails.plugin.springsecurity.facebook.domain.classname='cz.cvut.fel.hernaosc.via.sterope.user.FacebookUser'
+grails.plugin.springsecurity.facebook.domain.appUserConnectionPropertyName = 'user'
+//appid and secret are in config file
+grails.plugin.springsecurity.facebook.permissions = 'public_profile, email'

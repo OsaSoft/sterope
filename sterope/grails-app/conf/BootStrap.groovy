@@ -7,6 +7,10 @@ class BootStrap {
 	def init = { servletContext ->
 		def userRole = Role.findByAuthority('ROLE_USER') ?: new Role(authority: 'ROLE_USER').save(failOnError: true)
 		def adminRole = Role.findByAuthority('ROLE_ADMIN') ?: new Role(authority: 'ROLE_ADMIN').save(failOnError: true)
+		
+		['ROLE_FACEBOOK'].each{
+			if(!Role.findByAuthority(it)) new Role(authority: it).save(failOnError: true)
+		}
 
 		def adminUser = User.findByUsername('admin') ?: new User(
 				username: 'admin',

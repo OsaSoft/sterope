@@ -40,6 +40,8 @@ grails.project.dependency.resolution = {
         mavenLocal()
         grailsCentral()
         mavenCentral()
+		
+		mavenRepo 'http://repo1.maven.org/maven2'
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
         //mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
@@ -51,6 +53,8 @@ grails.project.dependency.resolution = {
         runtime 'mysql:mysql-connector-java:5.1.29'
         // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
         test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
+		
+		compile 'org.springframework.social:spring-social-facebook:2.0.3.RELEASE'
     }
 
     plugins {
@@ -68,6 +72,7 @@ grails.project.dependency.resolution = {
         runtime ":jquery:1.11.1"
 		
 		compile ':spring-security-core:2.0-RC5'
+		compile "org.grails.plugins:spring-security-facebook:0.17"
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"
