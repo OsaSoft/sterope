@@ -8,8 +8,10 @@ class FacebookUser {
     String accessToken
     Date accessTokenExpires
 	String name
-
-    static belongsTo = [user: User]
+	
+	static belongsTo = [
+		user: User
+		]
 
     static constraints = {
         uid unique: true

@@ -22,6 +22,9 @@
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
+			<g:if test="${flash.success}">
+			<div class="message" role="status">${flash.success}</div>
+			</g:if>
 			<ol class="property-list user">
 			
 				<g:if test="${userInstance?.username}">
@@ -66,6 +69,7 @@
 						<span class="property-value" aria-labelledby="facebookUser-label">
 							<g:if test="${userInstance?.facebookUser}">
 							${userInstance.facebookUser.name}
+							<g:link controller="user" action="unlinkFb"><g:message code="user.social.unlink"/></g:link>
 							</g:if>
 							<g:else>
 								<facebookAuth:connect/>

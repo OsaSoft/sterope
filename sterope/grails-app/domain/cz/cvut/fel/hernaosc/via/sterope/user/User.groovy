@@ -1,5 +1,7 @@
 package cz.cvut.fel.hernaosc.via.sterope.user
 
+import cz.cvut.fel.hernaosc.via.sterope.feed.RssFeed
+
 class User implements Serializable {
 
 	private static final long serialVersionUID = 1
@@ -18,6 +20,10 @@ class User implements Serializable {
 	String email
 	
 	FacebookUser facebookUser
+	
+	static hasMany = [
+		rssFeeds: RssFeed
+		]
 
 	static transients = ['springSecurityService']
 

@@ -6,7 +6,6 @@ import static org.springframework.http.HttpStatus.*
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true)
 class UserController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -26,6 +25,16 @@ class UserController {
 		}
 		
 		[userInstance: User.get(id)]
+	}
+	
+	@Secured(['ROLE_USER'])
+	def unlinkFb(){
+		User user = springSecurityService.currentUser
+		user.facebookUser = null
+		user.save(flush: true)
+		
+		flash.success = message(code: "user.social.unlink.success", args: ["Facebook"])
+		render view: "profile", model: [userInstance: user]
 	}
 	
 	@Secured(['ROLE_USER'])
@@ -93,7 +102,7 @@ class UserController {
         respond userInstance
     }
 
-	@Secured(['ROLE_ADMIN'])
+	@Secured(['ROLE_USER'])
     @Transactional
     def update(User userInstance) {
         if (userInstance == null) {

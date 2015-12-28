@@ -126,9 +126,11 @@ grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'cz.cvut.fel.he
 grails.plugin.springsecurity.authority.className = 'cz.cvut.fel.hernaosc.via.sterope.user.Role'
 grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-	'/**':                ['permitAll'],
-	'/index':           ['permitAll'],
-	'/index.gsp':       ['permitAll'],
+	'/**':				['ROLE_USER'],
+	'/*':               ['permitAll'],
+	'/login/**':        ['permitAll'],
+	'/logout/**':       ['permitAll'],
+	'/user/signup':		['permitAll'],
 	'/assets/**':       ['permitAll'],
 	'/**/js/**':        ['permitAll'],
 	'/**/css/**':       ['permitAll'],

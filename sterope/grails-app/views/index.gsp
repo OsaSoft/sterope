@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta name="layout" content="main"/>
-		<title>Welcome to Grails</title>
+		<title><g:message code="app.title"/></title>
 		<style type="text/css" media="screen">
 			#status {
 				background-color: #eee;
@@ -82,15 +82,23 @@
 	</head>
 	<body>
 		<a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div id="status" role="complementary">
+		<%-- <div id="status" role="complementary">
 			<h1>Menu</h1>
 			<ul>
-				<li>Lorem ipsum</li>
+				<li>Menu lorem ipsum</li>
 			</ul>
 		</div>
+		--%>
 		<div id="page-body" role="main">
-			<h1>Lorem ipsum</h1>
-			<p>Lorem ipsum dolor sit amet</p>
+			<sec:ifNotLoggedIn>
+				<h1><g:message code="index.anonymous.title"/></h1>
+				<p><g:message code="index.anonymous.text" encodeAs="raw" args="[link(controller: 'login') { message(code:'springSecurity.login.header')}]"/></p>
+			</sec:ifNotLoggedIn>
+			
+			<sec:ifLoggedIn>
+				<h1><g:message code="feed.title"/></h1>
+				<g:include controller="feed" action="myFeed"/>
+			</sec:ifLoggedIn>
 		</div>
 	</body>
 </html>
