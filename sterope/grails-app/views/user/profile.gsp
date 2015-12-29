@@ -31,8 +31,10 @@
 				<li class="fieldcontain">
 					<span id="username-label" class="property-label"><g:message code="user.username.label" default="Username" /></span>
 					
-						<span class="property-value" aria-labelledby="username-label"><g:fieldValue bean="${userInstance}" field="username"/></span>
-					
+						<span class="property-value" aria-labelledby="username-label">
+							<g:fieldValue bean="${userInstance}" field="username"/>
+							<g:link controller="user" action="editUsername"><i class="fa fa-pencil-square-o"></i>&nbsp;<g:message code="default.button.edit.label"/></g:link>
+						</span>
 				</li>
 				</g:if>
 			
@@ -69,13 +71,30 @@
 						<span class="property-value" aria-labelledby="facebookUser-label">
 							<g:if test="${userInstance?.facebookUser}">
 							${userInstance.facebookUser.name}
-							<g:link controller="user" action="unlinkFb"><g:message code="user.social.unlink"/></g:link>
+							<g:link controller="user" action="unlinkFb"><i class="fa fa-unlink"></i>&nbsp;<g:message code="user.social.unlink"/></g:link>
 							</g:if>
 							<g:else>
 								<facebookAuth:connect/>
 							</g:else>
 						</span>
 					
+				</li>
+				
+				<li class="fieldcontain">
+					<span id="rssFeeds-label" class="property-label"><g:message code="user.rssFeeds.label" default="RSS Feeds" /></span>
+					
+					<g:each in="${userInstance.rssFeeds}" var="rss">
+						<span class="property-value" aria-labelledby="rssFeeds-label">
+							<g:link title="${rss.url}" controller="rssFeed" action="show" params="[id: rss.id]" >${rss.name}</g:link>
+							<g:form style="display:inline;" id="delForm" url="[resource: rss, action:'delete']" method="DELETE">
+								<a href="#" onclick="document.getElementById('delForm').submit();"><i class="fa fa-times-circle"></i>&nbsp;<g:message code='default.button.delete.label'/></a>
+							</g:form>
+						</span>
+					</g:each>
+					
+					<span class="property-value" aria-labelledby="rssFeeds-label">
+						<g:link controller="rssFeed" action="create"><i class="fa fa-plus-circle"></i>&nbsp;<g:message code="rssFeed.add.label"/></g:link>
+					</span>
 				</li>
 			</ol>
 		</div>

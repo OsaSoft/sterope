@@ -8,7 +8,9 @@ import grails.transaction.Transactional
 
 class UserController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", editUsername: "POST"]
+	
+	static scaffold = true
 	
 	def springSecurityService
 
@@ -30,6 +32,7 @@ class UserController {
 	@Secured(['ROLE_USER'])
 	def unlinkFb(){
 		User user = springSecurityService.currentUser
+		user.facebookUser.delete()
 		user.facebookUser = null
 		user.save(flush: true)
 		
@@ -40,6 +43,26 @@ class UserController {
 	@Secured(['ROLE_USER'])
 	def profile(){
 		respond springSecurityService.currentUser
+	}
+	
+	@Secured(['ROLE_USER'])
+	def editUsername(){
+		[userInstance: springSecurityService.currentUser]
+	}
+	
+	@Secured(['ROLE_USER'])
+	def doEditUsername(){
+		def newUsername = params.newUsername
+		User u = springSecurityService.currentUser
+		
+		u.username = newUsername
+		if(!u.save(flush: true)){
+			flash.error = message(code: "user.editUsername.fail")
+			render view: 'editUsername', model: [userInstance: u]
+		} else {
+			flash.message = message(code: "user.editUsername.success")
+			render view: 'profile', model: [userInstance: u]
+		}
 	}
 
 	@Secured(['ROLE_ADMIN'])
