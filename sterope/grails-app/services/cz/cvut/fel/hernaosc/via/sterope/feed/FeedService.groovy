@@ -6,13 +6,15 @@ import grails.transaction.Transactional
 class FeedService {
 
     def getFeed(user){
-		def rss = getRss(user)
+		def feed = []
+		feed += getRss(user)
 		
-		return rss
+		return feed
 	}
 	
 	def getRss(user){
-		def rss = user.rssFeeds
+		def rss = []
+		rss += user.rssFeeds
 		
 		return rss
 	}

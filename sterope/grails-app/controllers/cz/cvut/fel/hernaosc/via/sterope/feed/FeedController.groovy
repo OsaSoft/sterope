@@ -9,6 +9,7 @@ class FeedController {
 	@Secured(['ROLE_USER'])
 	def myFeed(){
 		def feedItems = feedService.getFeed(springSecurityService.currentUser) ?: []
+		println feedItems
 		[feedItems: feedItems]
 	}
 }
