@@ -14,7 +14,19 @@ class FeedService {
 	
 	def getRss(user){
 		def rss = []
-		rss += user.rssFeeds
+		user.rssFeeds.each{
+			//TODO: check for url validity, possibly BEFORE adding the feed
+			def feed = new XmlSlurper().parse(it.url)
+			def feedItems = feed.item
+			def rf = [:]
+			rf["title"] = feed.title
+			rf["items"] = []
+			feedItems.each{
+				rf["items"] << it
+			}
+			
+			rss << rf
+		}
 		
 		return rss
 	}

@@ -8,8 +8,13 @@ class FeedController {
 	
 	@Secured(['ROLE_USER'])
 	def myFeed(){
-		def feedItems = feedService.getFeed(springSecurityService.currentUser) ?: []
-		println feedItems
-		[feedItems: feedItems]
+		def feed = feedService.getFeed(springSecurityService.currentUser)
+		def numNewItems = 0
+		feed.each{
+			println it.items.size()
+			numNewItems += it.items.size()
+		}
+		
+		[feed: feed, numNewItems: numNewItems]
 	}
 }
