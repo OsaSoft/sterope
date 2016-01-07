@@ -128,6 +128,7 @@ grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**':				['ROLE_USER'],
 	'/*':               ['permitAll'],
+	'/api/**':			['permitAll'],
 	'/login/**':        ['permitAll'],
 	'/logout/**':       ['permitAll'],
 	'/user/signup':		['permitAll'],
@@ -136,6 +137,11 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/css/**':       ['permitAll'],
 	'/**/images/**':    ['permitAll'],
 	'/**/favicon.ico':  ['permitAll']
+]
+
+grails.plugin.springsecurity.filterChain.chainMap = [
+	'/api/**': 'JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter',  // Stateless chain
+	'/**': 'JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter'                                                                          // Traditional chain
 ]
 
 grails.plugin.springsecurity.facebook.domain.classname='cz.cvut.fel.hernaosc.via.sterope.user.FacebookUser'

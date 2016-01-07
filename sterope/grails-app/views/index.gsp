@@ -89,6 +89,12 @@
 			</ul>
 		</div>
 		--%>
+		<g:if test="${flash.error}">
+			<div class="errors" role="alert">${flash.error}</div>
+		</g:if>
+		<g:if test="${flash.success}">
+			<div class="message" role="status">${flash.success}</div>
+		</g:if>
 		<div id="page-body" role="main">
 			<sec:ifNotLoggedIn>
 				<h1><g:message code="index.anonymous.title"/></h1>

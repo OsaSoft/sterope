@@ -9,12 +9,33 @@ class FeedController {
 	@Secured(['ROLE_USER'])
 	def myFeed(){
 		def feed = feedService.getFeed(springSecurityService.currentUser)
-		def numNewItems = 0
-		feed.each{
-			println it.items.size()
-			numNewItems += it.items.size()
-		}
 		
-		[feed: feed, numNewItems: numNewItems]
+		[feed: feed, numNewItems: feed.size()]
+	}
+	
+	@Secured(['ROLE_USER'])
+	def markRead(Long id){
+		def item = FeedItem.findById(id)
+		if(!item){
+			flash.error = message(code: "default.not.found.message", args: [message(code: 'feed.item.label'),id])
+			redirect url: "/"	
+		} else if(item.user != springSecurityService.currentUser){
+			render view:"/forbidden"
+		} else {
+			item.done = true
+			item.save(flush: true)
+			flash.success = message(code: "feed.markRead.success", args: ["$item.feedName - $item.title"])
+			redirect url: "/"
+		}
+	}
+	
+	@Secured(['ROLE_USER'])
+	def markAllRead(){
+		FeedItem.findAllByUserAndDone(springSecurityService.currentUser, false).each{
+			it.done = true
+			it.save(flush: true)
+		}
+		flash.success = message(code: "feed.markAllRead.success")
+		redirect url: "/"
 	}
 }

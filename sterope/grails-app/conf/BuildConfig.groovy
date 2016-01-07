@@ -45,9 +45,9 @@ grails.project.dependency.resolution = {
 		
 		mavenRepo 'http://repo1.maven.org/maven2'
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
-        //mavenRepo "http://repository.codehaus.org"
-        //mavenRepo "http://download.java.net/maven/2/"
-        //mavenRepo "http://repository.jboss.com/maven2/"
+        mavenRepo "http://repository.codehaus.org"
+        mavenRepo "http://download.java.net/maven/2/"
+        mavenRepo "http://repository.jboss.com/maven2/"
     }
 
     dependencies {
@@ -57,6 +57,7 @@ grails.project.dependency.resolution = {
         test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
 		
 		compile 'org.springframework.social:spring-social-facebook:2.0.3.RELEASE'
+		compile 'com.joestelmach:natty:0.11'
     }
 
     plugins {
@@ -75,6 +76,7 @@ grails.project.dependency.resolution = {
 		
 		compile ':spring-security-core:2.0-RC5'
 		compile "org.grails.plugins:spring-security-facebook:0.17"
+		compile "org.grails.plugins:spring-security-rest:1.5.3"
 
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"
