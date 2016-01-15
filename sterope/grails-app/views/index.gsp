@@ -96,6 +96,7 @@
 			<div class="message" role="status">${flash.success}</div>
 		</g:if>
 		<div id="page-body" role="main">
+			<h2><g:message code="weather.title"/> <g:include controller="feed" action="weather"/></h2>
 			<sec:ifNotLoggedIn>
 				<h1><g:message code="index.anonymous.title"/></h1>
 				<p><g:message code="index.anonymous.text" encodeAs="raw" args="[link(controller: 'login') { message(code:'springSecurity.login.header')}]"/></p>

@@ -1,0 +1,100 @@
+swagger: '2.0'
+info:
+  title: Sterope API
+  description: All your feeds in one place
+  version: 1.0.0
+host: localhost
+schemes:
+  - http
+basePath: /api
+produces:
+  - application/json
+paths:
+  /login:
+    post:
+      summary: Authentication endpoint
+      description: |
+        API endpoint for user authentication
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Credentials'
+      tags:
+        - Auth
+      responses:
+        '401':
+          description: Incorrect credentials
+        '200':
+          description: Authentication was succesfull.
+          schema:
+            $ref: '#/definitions/Token'
+  /feed:
+    get:
+      summary: User feed
+      description: >
+        Individual items in the user's feed
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer token required for authorization
+          required: true
+          type: string
+      tags:
+        - Feed
+      responses:
+        '200':
+          description: An array of user's feed items
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FeedItem'
+        '401':
+          description: Token is missing or incorrect
+definitions:
+  Credentials:
+    type: object
+    properties:
+      username:
+        type: string
+        description: User's username
+  FeedItem:
+    type: object
+    properties:
+      date:
+        type: string
+        description: The date of the feed item
+      feedName:
+        type: string
+        description: Name of the feed this item belongs to
+      link:
+        type: string
+        description: URL to which the feed item points
+      title:
+        type: string
+        description: Feed Item title
+  Role:
+    type: string
+  Token:
+    type: object
+    properties:
+      username:
+        type: string
+        description: User's username
+      roles:
+        type: array
+        description: Roles (authorities) assigned to user
+        $ref: '#/definitions/Role'
+      token_type:
+        type: string
+        description: Type of token generated. Default Bearer
+      access_token:
+        type: string
+        description: The value of the access Bearer token
+      expires_in:
+        type: integer
+        description: Time till token expires
+      refresh_token:
+        type: string
+        description: The value of the refresh token

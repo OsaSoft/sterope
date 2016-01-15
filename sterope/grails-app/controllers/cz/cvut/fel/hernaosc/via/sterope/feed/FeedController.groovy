@@ -1,6 +1,7 @@
 package cz.cvut.fel.hernaosc.via.sterope.feed
 
 import grails.plugin.springsecurity.annotation.Secured
+import groovy.json.JsonSlurper
 
 class FeedController {
 	def springSecurityService
@@ -11,6 +12,13 @@ class FeedController {
 		def feed = feedService.getFeed(springSecurityService.currentUser)
 		
 		[feed: feed, numNewItems: feed.size()]
+	}
+	
+	@Secured(['permitAll'])
+	def weather(){
+		def url="http://api.openweathermap.org/data/2.5/weather?q=Prague&APPID=132bbdb79f5ce855589ea9cb135b3ee3"
+		def d = new JsonSlurper().parseText(url.toURL().text)
+		render "${d.weather.description}" - ']' - '['
 	}
 	
 	@Secured(['ROLE_USER'])

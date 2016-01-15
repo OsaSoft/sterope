@@ -12,4 +12,9 @@ class ApiController {
 		def feed = feedService.getFeed(springSecurityService.currentUser)
 		render feed as JSON
 	}
+	
+	@Secured(["permitAll"])
+	def docs(){
+		
+	}
 }
